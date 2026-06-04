@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zaryab - Premium Yalla Ludo Gaming Profile">
+    <title>Zaryab | Yalla Ludo Gaming Profile</title>
+    <style>
+        /* ============================================
+           CSS RESET & GLOBAL VARIABLES
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color Palette - Dark Gaming Theme */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #12122b;
+            --bg-tertiary: #1a1a35;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-gold: #fbbf24;
+            --accent-green: #10b981;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0c0;
+            --text-muted: #6b6b8c;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+
+            /* Gradients */
+            --gradient-1: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-2: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-3: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            --gradient-4: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-dark: linear-gradient(135deg, #0a0a1a 0%, #1a1a35 100%);
+
+            /* Spacing & Sizing */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ============================================
+           BASE STYLES
+        ============================================ */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-pink);
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent-purple);
+            color: white;
+        }
+
+        /* ============================================
+           LOADING SCREEN
+        ============================================ */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 1.5s ease-in-out infinite;
+            letter-spacing: 4px;
+        }
+        .loader-bar {
+            width: 250px;
+            height: 6px;
+            background: var(--glass-bg);
+            border-radius: 10px;
+            margin-top: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loader-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            animation: loadingBar 2s ease-in-out forwards;
+        }
+        .loader-text {
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+        @keyframes loadingBar {
+            0% { width: 0%; }
+            50% { width: 65%; }
+            100% { width: 100%; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.8; }
+        }
+
+        /* ============================================
+           PARTICLES BACKGROUND CANVAS
+        ============================================ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Animated gradient background overlay */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite alternate;
+        }
+        @keyframes bgMove {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.2) rotate(5deg); }
+        }
+
+        /* ============================================
+           NAVIGATION BAR
+        ============================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+        nav.scrolled {
+            padding: 12px 5%;
+            background: rgba(10, 10, 26, 0.9);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.4);
+        }
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-text-fill-color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+        .nav-links a:hover::after {
+            width: 60%;
+        }
+        .nav-cta {
+            background: var(--gradient-1) !important;
+            color: white !important;
+            padding: 10px 24px !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* ============================================
+           GENERAL LAYOUT & CONTAINER
+        ============================================ */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0c0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Base */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transition: var(--transition);
+        }
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 100px;
+            overflow: hidden;
+        }
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+        .hero-badge .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 .highlight {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: gradientShift 4s ease infinite;
+            background-size: 200% 200%;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 35px;
+        }
+        .hero-stat h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-stat span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+        }
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+        .btn-secondary:hover {
+            background: var(--glass-border);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Profile Visual */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .hero-avatar-ring {
+            position: relative;
+            width: 340px;
+            height: 340px;
+        }
+        .hero-avatar-ring .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+        .ring-1 {
+            inset: 0;
+            border-top-color: var(--accent-purple);
+            border-bottom-color: var(--accent-pink);
+            animation: rotate 8s linear infinite;
+        }
+        .ring-2 {
+            inset: 20px;
+            border-left-color: var(--accent-blue);
+            border-right-color: var(--accent-cyan);
+            animation: rotate 6s linear infinite reverse;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hero-avatar {
+            position: absolute;
+            inset: 40px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+            overflow: hidden;
+        }
+        .hero-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .floating-badge {
+            position: absolute;
+            padding: 12px 18px;
+            background: rgba(18, 18, 43, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: float 4s ease-in-out infinite;
+        }
+        .floating-badge .icon {
+            font-size: 1.4rem;
+        }
+        .fb-1 { top: 10%; left: -30px; animation-delay: 0s; }
+        .fb-2 { top: 50%; right: -40px; animation-delay: 1s; }
+        .fb-3 { bottom: 10%; left: 0; animation-delay: 2s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ============================================
+           PROFILE CARD SECTION
+        ============================================ */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+        .profile-card {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 900;
+            position: relative;
+            border: 4px solid var(--bg-tertiary);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+        }
+        .profile-level {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--bg-primary);
+            border: 3px solid var(--bg-primary);
+        }
+        .profile-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        .profile-username {
+            color: var(--accent-purple);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+        .profile-id {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+        .profile-location {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .profile-rank {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+        }
+        .profile-rank .rank-icon {
+            font-size: 2rem;
+        }
+        .profile-rank .rank-info {
+            text-align: left;
+        }
+        .profile-rank .rank-info h4 {
+            font-size: 1.1rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .profile-rank .rank-info span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .profile-progress {
+            margin-bottom: 24px;
+        }
+        .profile-progress .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: var(--glass-bg);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 50px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+        .profile-socials {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .social-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .social-btn:hover {
+            background: var(--gradient-1);
+            transform: translateY(-3px);
+        }
+
+        /* Profile Details / About */
+        .profile-details {
+            padding: 40px;
+        }
+        .profile-details h3 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+        .profile-details p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        .info-item:hover {
+            transform: translateX(5px);
+            background: var(--glass-border);
+        }
+        .info-item .info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .info-item h5 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+        .info-item p {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* ============================================
+           STATISTICS SECTION
+        ============================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .stat-card {
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-1);
+            filter: blur(60px);
+            opacity: 0.3;
+            transition: var(--transition);
+        }
+        .stat-card:hover::before {
+            opacity: 0.6;
+        }
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            position: relative;
+        }
+        .stat-icon.purple { background: var(--gradient-1); }
+        .stat-icon.blue { background: var(--gradient-2); }
+        .stat-icon.gold { background: var(--gradient-3); }
+        .stat-icon.green { background: var(--gradient-4); }
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .stat-change {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+        }
+
+        /* ============================================
+           ACHIEVEMENTS SECTION
+        ============================================ */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .achievement-card {
+            padding: 28px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            background: var(--gradient-1);
+        }
+        .achievement-content h4 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+        .achievement-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        .achievement-progress {
+            height: 6px;
+            background: var(--glass-bg);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .achievement-progress .fill {
+            height: 100%;
+            background: var(--gradient-3);
+            border-radius: 50px;
+        }
+        .achievement-status {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            padding: 3px 12px;
+            border-radius: 50px;
+        }
+        .status-complete {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+        .status-progress {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--accent-gold);
+        }
+
+        /* ============================================
+           TROPHIES & BADGES SECTION
+        ============================================ */
+        .trophies-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .trophy-showcase {
+            padding: 40px;
+        }
+        .trophy-showcase h3 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .trophy-item {
+            text-align: center;
+            padding: 20px 10px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .trophy-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: var(--glass-border);
+        }
+        .trophy-emoji {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));
+        }
+        .trophy-item h5 {
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .trophy-item span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .badge-item {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .badge-item:hover {
+            transform: rotate(10deg) scale(1.1);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+        .badge-item .badge-icon {
+            font-size: 1.8rem;
+        }
+        .badge-item.locked {
+            opacity: 0.4;
+            filter: grayscale(1);
+        }
+
+        /* ============================================
+           MATCH HISTORY TABLE
+        ============================================ */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-lg);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+        thead {
+            background: rgba(139, 92, 246, 0.1);
+        }
+        th {
+            padding: 18px 24px;
+            text-align: left;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+        td {
+            padding: 18px 24px;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+        tbody tr {
+            transition: var(--transition);
+        }
+        tbody tr:hover {
+            background: var(--glass-bg);
+        }
+        .match-game {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        .match-game .game-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .result {
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .result.win {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+        .result.loss {
+            background: rgba(236, 72, 153, 0.2);
+            color: var(--accent-pink);
+        }
+        .result.draw {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--accent-gold);
+        }
+
+        /* ============================================
+           LEADERBOARD SECTION
+        ============================================ */
+        .leaderboard {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 60px 1fr auto auto;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 24px;
+        }
+        .leaderboard-rank {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .leaderboard-item.top-1 .leaderboard-rank { color: var(--accent-gold); }
+        .leaderboard-item.top-2 .leaderboard-rank { color: #c0c0c0; }
+        .leaderboard-item.top-3 .leaderboard-rank { color: #cd7f32; }
+        .leaderboard-item.top-1 {
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            background: rgba(251, 191, 36, 0.05);
+        }
+        .leaderboard-player {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .leaderboard-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+        }
+        .leaderboard-player h5 {
+            font-size: 1rem;
+        }
+        .leaderboard-player span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .leaderboard-score {
+            text-align: right;
+        }
+        .leaderboard-score h4 {
+            font-size: 1.2rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .leaderboard-score span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           FRIENDS / TEAM SECTION
+        ============================================ */
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .friend-card {
+            padding: 28px 20px;
+            text-align: center;
+        }
+        .friend-avatar {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            position: relative;
+        }
+        .friend-status {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+        }
+        .status-online { background: var(--accent-green); }
+        .status-offline { background: var(--text-muted); }
+        .status-playing { background: var(--accent-gold); }
+        .friend-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .friend-card .friend-role {
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+        .friend-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 14px;
+            border-top: 1px solid var(--glass-border);
+        }
+        .friend-stats div h5 {
+            font-size: 1.1rem;
+        }
+        .friend-stats div span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           GALLERY SECTION
+        ============================================ */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
+            gap: 16px;
+        }
+        .gallery-item {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: var(--transition);
+        }
+        .gallery-item:nth-child(2) { background: var(--gradient-2); }
+        .gallery-item:nth-child(3) { background: var(--gradient-3); }
+        .gallery-item:nth-child(4) { background: var(--gradient-4); }
+        .gallery-item:nth-child(5) { background: var(--gradient-2); }
+        .gallery-item:nth-child(6) { background: var(--gradient-1); }
+        .gallery-item:nth-child(7) { background: var(--gradient-4); }
+        .gallery-item:nth-child(8) { background: var(--gradient-3); }
+        .gallery-item.wide { grid-column: span 2; }
+        .gallery-item.tall { grid-row: span 2; }
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 18px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-overlay h5 {
+            font-size: 1rem;
+        }
+
+        /* ============================================
+           TIMELINE SECTION
+        ============================================ */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-1);
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px 40px;
+            margin-bottom: 20px;
+        }
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        .timeline-dot {
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            border: 4px solid var(--bg-primary);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+            z-index: 2;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -50px;
+        }
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -50px;
+        }
+        .timeline-content {
+            padding: 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        .timeline-content:hover {
+            border-color: var(--accent-purple);
+            transform: scale(1.02);
+        }
+        .timeline-date {
+            display: inline-block;
+            padding: 4px 14px;
+            background: var(--gradient-1);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           FAQ SECTION
+        ============================================ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .faq-item {
+            padding: 0;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 22px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition);
+        }
+        .faq-question:hover {
+            color: var(--accent-purple);
+        }
+        .faq-icon {
+            font-size: 1.4rem;
+            transition: var(--transition);
+            color: var(--accent-purple);
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            color: var(--text-secondary);
+            padding: 0 28px;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 28px 22px;
+        }
+
+        /* ============================================
+           CONTACT SECTION
+        ============================================ */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .contact-info {
+            padding: 40px;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        .contact-method:hover {
+            transform: translateX(8px);
+        }
+        .contact-method .c-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .contact-method h5 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .contact-method p {
+            margin: 0;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .contact-form {
+            padding: 40px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .contact-form .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        footer {
+            background: var(--bg-secondary);
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--glass-border);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand .nav-logo {
+            margin-bottom: 16px;
+        }
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .footer-col ul li a:hover {
+            color: var(--accent-purple);
+            padding-left: 5px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footer-bottom .heart {
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           SCROLL REVEAL ANIMATIONS
+        ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Scroll To Top Button */
+        #scrollTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
+        }
+        #scrollTop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #scrollTop:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+        ============================================ */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+            .friends-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 320px;
+                height: 100vh;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                justify-content: center;
+                padding: 40px;
+                gap: 20px;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { width: 100%; text-align: center; font-size: 1.1rem; }
+
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero-stats { justify-content: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-visual { margin-top: 40px; }
+            .hero-avatar-ring { width: 260px; height: 260px; }
+
+            .profile-section { grid-template-columns: 1fr; }
+            .trophies-container { grid-template-columns: 1fr; }
+            .contact-container { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .info-grid { grid-template-columns: 1fr; }
+
+            .section-title { font-size: 2rem; }
+            section { padding: 70px 0; }
+
+            /* Timeline mobile */
+            .timeline::before { left: 20px; }
+            .timeline-item {
+                width: 100%;
+                padding-left: 55px;
+                padding-right: 15px;
+                text-align: left !important;
+                left: 0 !important;
+            }
+            .timeline-item .timeline-dot {
+                left: 12px !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .achievements-grid { grid-template-columns: 1fr; }
+            .friends-grid { grid-template-columns: 1fr; }
+            .badge-grid { grid-template-columns: repeat(3, 1fr); }
+            .trophy-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-stats { flex-wrap: wrap; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         LOADING SCREEN
+    ============================================ -->
+    <div id="loader">
+        <div class="loader-logo">ZARYAB</div>
+        <div class="loader-bar">
+            <div class="loader-bar-fill"></div>
+        </div>
+        <div class="loader-text">LOADING GAMING PROFILE...</div>
+    </div>
+
+    <!-- ============================================
+         ANIMATED BACKGROUNDS
+    ============================================ -->
+    <div class="bg-overlay"></div>
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ============================================
+         NAVIGATION
+    ============================================ -->
+    <nav id="navbar">
+        <div class="nav-logo" onclick="scrollToTop()">
+            <span class="nav-logo-icon">🎲</span>
+            ZARYAB
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#hero" onclick="closeMenu()">Home</a></li>
+            <li><a href="#profile" onclick="closeMenu()">Profile</a></li>
+            <li><a href="#stats" onclick="closeMenu()">Stats</a></li>
+            <li><a href="#achievements" onclick="closeMenu()">Achievements</a></li>
+            <li><a href="#leaderboard" onclick="closeMenu()">Leaderboard</a></li>
+            <li><a href="#timeline" onclick="closeMenu()">Journey</a></li>
+            <li><a href="#contact" class="nav-cta" onclick="closeMenu()">Contact</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         HERO SECTION
+    ============================================ -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text reveal-left">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        Online &amp; Ready to Play
+                    </div>
+                    <h1>Hi, I'm <span class="highlight">Zaryab</span><br>Pro Ludo Champion</h1>
+                    <p>Welcome to my official Yalla Ludo gaming profile. A dedicated competitive player from Lahore, mastering dice, dominoes, and domination across the boards.</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <h3 data-count="2480">0</h3>
+                            <span>Total Wins</span>
+                        </div>
+                        <div class="hero-stat">
+                            <h3 data-count="87">0</h3>
+                            <span>Win Rate %</span>
+                        </div>
+                        <div class="hero-stat">
+                            <h3 data-count="156">0</h3>
+                            <span>Tournaments</span>
+                        </div>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#profile" class="btn btn-primary">View Profile 🎮</a>
+                        <a href="#stats" class="btn btn-secondary">My Stats 📊</a>
+                    </div>
+                </div>
+                <div class="hero-visual reveal-right">
+                    <div class="hero-avatar-ring">
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="hero-avatar">Z</div>
+                        <div class="floating-badge fb-1">
+                            <span class="icon">🏆</span> Top Player
+                        </div>
+                        <div class="floating-badge fb-2">
+                            <span class="icon">⭐</span> Level 99
+                        </div>
+                        <div class="floating-badge fb-3">
+                            <span class="icon">🔥</span> 45 Win Streak
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PROFILE SECTION
+    ============================================ -->
+    <section id="profile">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Player Card</span>
+                <h2 class="section-title">My Gaming Profile</h2>
+                <p class="section-subtitle">Everything you need to know about my Yalla Ludo journey and gaming identity.</p>
+            </div>
+            <div class="profile-section">
+                <!-- Profile Card -->
+                <div class="glass-card profile-card reveal-left">
+                    <div class="profile-avatar">
+                        Z
+                        <span class="profile-level">99</span>
+                    </div>
+                    <h2>Zaryab</h2>
+                    <p class="profile-username">@zaryab_ludo_king</p>
+                    <div class="profile-id">ID: 20767368567</div>
+                    <p class="profile-location">📍 Lahore, Pakistan</p>
+                    <div class="profile-rank">
+                        <span class="rank-icon">👑</span>
+                        <div class="rank-info">
+                            <h4>Legendary Master</h4>
+                            <span>Top 0.5% Worldwide</span>
+                        </div>
+                    </div>
+                    <div class="profile-progress">
+                        <div class="progress-label">
+                            <span>XP Progress</span>
+                            <span>8,750 / 10,000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="87"></div>
+                        </div>
+                    </div>
+                    <div class="profile-socials">
+                        <a href="#" class="social-btn" title="Facebook">📘</a>
+                        <a href="#" class="social-btn" title="Instagram">📸</a>
+                        <a href="#" class="social-btn" title="YouTube">▶️</a>
+                        <a href="#" class="social-btn" title="Discord">🎧</a>
+                    </div>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="glass-card profile-details reveal-right">
+                    <h3>About Me 🎯</h3>
+                    <p>I'm a passionate and highly competitive Yalla Ludo player based in Lahore. Over the years, I've climbed the global ranks through strategy, patience, and pure dice mastery. I love hosting tournaments, building gaming communities, and helping new players improve their game. Let's roll the dice and dominate the boards together!</p>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-icon">🎮</span>
+                            <div>
+                                <h5>Favorite Game</h5>
+                                <p>Ludo Classic</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div>
+                                <h5>Playing Since</h5>
+                                <p>2019</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">⚡</span>
+                            <div>
+                                <h5>Play Style</h5>
+                                <p>Aggressive</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🌍</span>
+                            <div>
+                                <h5>Global Rank</h5>
+                                <p>#142</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🏅</span>
+                            <div>
+                                <h5>Coins Earned</h5>
+                                <p>4.2M</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💎</span>
+                            <div>
+                                <h5>Diamonds</h5>
+                                <p>18,500</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         STATISTICS SECTION
+    ============================================ -->
+    <section id="stats">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Performance</span>
+                <h2 class="section-title">Gaming Statistics</h2>
+                <p class="section-subtitle">My career numbers that speak for themselves on the battlefield.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon purple">🎮</div>
+                    <div class="stat-number" data-count="3850">0</div>
+                    <div class="stat-label">Games Played</div>
+                    <div class="stat-change">↑ 12% this month</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon green">🏆</div>
+                    <div class="stat-number" data-count="2480">0</div>
+                    <div class="stat-label">Total Victories</div>
+                    <div class="stat-change">↑ 8% this month</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon gold">⭐</div>
+                    <div class="stat-number" data-count="87">0</div>
+                    <div class="stat-label">Win Rate (%)</div>
+                    <div class="stat-change">↑ 3% this month</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon blue">🔥</div>
+                    <div class="stat-number" data-count="45">0</div>
+                    <div class="stat-label">Best Win Streak</div>
+                    <div class="stat-change">Personal Record</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon gold">🏅</div>
+                    <div class="stat-number" data-count="156">0</div>
+                    <div class="stat-label">Tournaments Won</div>
+                    <div class="stat-change">↑ 5 new wins</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon purple">👥</div>
+                    <div class="stat-number" data-count="892">0</div>
+                    <div class="stat-label">Friends</div>
+                    <div class="stat-change">↑ Growing daily</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon green">🎲</div>
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">Lucky Sixes (%)</div>
+                    <div class="stat-change">High roller</div>
+                </div>
+                <div class="glass-card stat-card reveal">
+                    <div class="stat-icon blue">⏱️</div>
+                    <div class="stat-number" data-count="1240">0</div>
+                    <div class="stat-label">Hours Played</div>
+                    <div class="stat-change">Dedicated grind</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         ACHIEVEMENTS SECTION
+    ============================================ -->
+    <section id="achievements">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Milestones</span>
+                <h2 class="section-title">Achievements</h2>
+                <p class="section-subtitle">Hard-earned accomplishments collected throughout my gaming career.</p>
+            </div>
+            <div class="achievements-grid">
+                <div class="glass-card achievement-card reveal">
+                    <div class="achievement-icon">🥇</div>
+                    <div class="achievement-content">
+                        <h4>First Blood</h4>
+                        <p>Win your very first ranked match.</p>
+                        <div class="achievement-progress"><div class="fill" style="width:100%"></div></div>
+                        <span class="achievement-status status-complete">Completed</span>
+                    </div>
+                </div>
+                <div class="glass-card achievement-card reveal">
+                    <div class="achievement-icon">🔥</div>
+                    <div class="achievement-content">
+                        <h4>Unstoppable</h4>
+                        <p>Achieve a 25 game win streak.</p>
+                        <div class="achievement-progress"><div class="fill" style="width:100%"></div></div>
+                        <span class="achievement-status status-complete">Completed</span>
+                    </div>
+                </div>
+                <div class="glass-card achievement-card reveal">
+                    <div class="achievement-icon">💰</div>
+                    <div class="achievement-content">
+                        <h4>Coin Master</h4>
+                        <p>Earn 5 million coins total.</p>
+                        <div class="achievement-progress"><div class="fill" style="width:84%"></div></div>
+                        <span class="achievement-status status-progress">84% Complete</span>
+                    </div>
+                </div>
+                <div class="glass-card achievement-card reveal">
+                    <div class="achievement-icon">🎲</div>
+                    <div class="achievement-content">
+                        <h4>Lucky Roller</h4>
+                        <p>Roll 1000 sixes in a single season.</p>
+                        <div class="achievement-progress"><div class="fill" style="width:100%"></div></div>
+                        <span class="achievement-status status-complete">Completed</span>
+                    </div>
+                </div>
+                <div class="glass-card achievement-card reveal">
+                    <div class="achievement-icon">👑</div>
+                    <div class="achievement-content">
+                        <h4>Legendary Status</h4>
+                        <p>Reach the Legendary Master rank.</p>
+                        <div class="achievement-progress"><div class="fill" style="width:100%"></div></div>
+                        <span class="achievement-status status-complete">Completed</span>
+                    </div>
+                </div>
+                <div class="glass-card achievement-card reveal">
+                    <div class="achievement-icon">🌟</div>
+                    <div class="achievement-content">
+                        <h4>Global Elite</h4>
+                        <p>Break into the global top 100 players.</p>
+                        <div class="achievement-progress"><div class="fill" style="width:65%"></div></div>
+                        <span class="achievement-status status-progress">65% Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         TROPHIES & BADGES SECTION
+    ============================================ -->
+    <section id="trophies">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Collection</span>
+                <h2 class="section-title">Trophies &amp; Badges</h2>
+                <p class="section-subtitle">My prized collection of trophies and exclusive badges.</p>
+            </div>
+            <div class="trophies-container">
+                <!-- Trophies -->
+                <div class="glass-card trophy-showcase reveal-left">
+                    <h3>🏆 Trophy Cabinet</h3>
+                    <div class="trophy-grid">
+                        <div class="trophy-item">
+                            <span class="trophy-emoji">🏆</span>
+                            <h5>Grand Champion</h5>
+                            <span>2024 Season</span>
+                        </div>
+                        <div class="trophy-item">
+                            <span class="trophy-emoji">🥇</span>
+                            <h5>Gold League</h5>
+                            <span>x12 Times</span>
+                        </div>
+                        <div class="trophy-item">
+                            <span class="trophy-emoji">🎖️</span>
+                            <h5>MVP Award</h5>
+                            <span>2023</span>
+                        </div>
+                        <div class="trophy-item">
+                            <span class="trophy-emoji">🏅</span>
+                            <h5>Tournament King</h5>
+                            <span>x156 Wins</span>
+                        </div>
+                        <div class="trophy-item">
+                            <span class="trophy-emoji">👑</span>
+                            <h5>Crown Holder</h5>
+                            <span>Elite</span>
+                        </div>
+                        <div class="trophy-item">
+                            <span class="trophy-emoji">💎</span>
+                            <h5>Diamond Tier</h5>
+                            <span>Reached</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Badges -->
+                <div class="glass-card trophy-showcase reveal-right">
+                    <h3>🎯 Badge Collection</h3>
+                    <div class="badge-grid">
+                        <div class="badge-item"><span class="badge-icon">🔥</span></div>
+                        <div class="badge-item"><span class="badge-icon">⚡</span></div>
+                        <div class="badge-item"><span class="badge-icon">🎲</span></div>
+                        <div class="badge-item"><span class="badge-icon">⭐</span></div>
+                        <div class="badge-item"><span class="badge-icon">🛡️</span></div>
+                        <div class="badge-item"><span class="badge-icon">🎯</span></div>
+                        <div class="badge-item"><span class="badge-icon">💪</span></div>
+                        <div class="badge-item"><span class="badge-icon">🚀</span></div>
+                        <div class="badge-item locked"><span class="badge-icon">🔒</span></div>
+                        <div class="badge-item locked"><span class="badge-icon">🔒</span></div>
+                        <div class="badge-item locked"><span class="badge-icon">🔒</span></div>
+                        <div class="badge-item locked"><span class="badge-icon">🔒</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         MATCH HISTORY SECTION
+    ============================================ -->
+    <section id="matches">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Recent Games</span>
+                <h2 class="section-title">Match History</h2>
+                <p class="section-subtitle">A log of my most recent competitive matches and results.</p>
+            </div>
+            <div class="table-wrapper reveal">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Game Mode</th>
+                            <th>Opponent</th>
+                            <th>Result</th>
+                            <th>Score</th>
+                            <th>Duration</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🎲</span> Ludo Classic</div></td>
+                            <td>ShadowKnight92</td>
+                            <td><span class="result win">WIN</span></td>
+                            <td>4 - 1</td>
+                            <td>14:32</td>
+                            <td>Today</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🀄</span> Domino Pro</div></td>
+                            <td>LuckyDice_X</td>
+                            <td><span class="result win">WIN</span></td>
+                            <td>120 - 95</td>
+                            <td>09:15</td>
+                            <td>Today</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🎲</span> Ludo Master</div></td>
+                            <td>QueenRoller</td>
+                            <td><span class="result loss">LOSS</span></td>
+                            <td>2 - 4</td>
+                            <td>18:44</td>
+                            <td>Yesterday</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🎯</span> Quick Match</div></td>
+                            <td>FastFingers77</td>
+                            <td><span class="result win">WIN</span></td>
+                            <td>3 - 0</td>
+                            <td>06:28</td>
+                            <td>Yesterday</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🎲</span> Ludo Classic</div></td>
+                            <td>DiceWizard</td>
+                            <td><span class="result draw">DRAW</span></td>
+                            <td>2 - 2</td>
+                            <td>22:10</td>
+                            <td>2 days ago</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🀄</span> Domino Pro</div></td>
+                            <td>BoardBoss</td>
+                            <td><span class="result win">WIN</span></td>
+                            <td>150 - 88</td>
+                            <td>11:55</td>
+                            <td>2 days ago</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🎲</span> Ludo Master</div></td>
+                            <td>StormBreaker</td>
+                            <td><span class="result win">WIN</span></td>
+                            <td>4 - 2</td>
+                            <td>16:30</td>
+                            <td>3 days ago</td>
+                        </tr>
+                        <tr>
+                            <td><div class="match-game"><span class="game-icon">🎯</span> Quick Match</div></td>
+                            <td>NightOwl_99</td>
+                            <td><span class="result loss">LOSS</span></td>
+                            <td>1 - 3</td>
+                            <td>08:12</td>
+                            <td>3 days ago</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         LEADERBOARD SECTION
+    ============================================ -->
+    <section id="leaderboard">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Rankings</span>
+                <h2 class="section-title">Global Leaderboard</h2>
+                <p class="section-subtitle">See where I stand among the best Yalla Ludo players worldwide.</p>
+            </div>
+            <div class="leaderboard">
+                <div class="glass-card leaderboard-item top-1 reveal">
+                    <div class="leaderboard-rank">🥇</div>
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-avatar" style="background:var(--gradient-3)">D</div>
+                        <div><h5>DragonSlayer</h5><span>Legendary Master</span></div>
+                    </div>
+                    <div class="leaderboard-score"><h4>9,850</h4><span>Points</span></div>
+                    <div class="leaderboard-score"><h4>94%</h4><span>Win Rate</span></div>
+                </div>
+                <div class="glass-card leaderboard-item top-2 reveal">
+                    <div class="leaderboard-rank">🥈</div>
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-avatar" style="background:var(--gradient-2)">P</div>
+                        <div><h5>PhoenixRise</h5><span>Legendary Master</span></div>
+                    </div>
+                    <div class="leaderboard-score"><h4>9,420</h4><span>Points</span></div>
+                    <div class="leaderboard-score"><h4>91%</h4><span>Win Rate</span></div>
+                </div>
+                <div class="glass-card leaderboard-item top-3 reveal">
+                    <div class="leaderboard-rank">🥉</div>
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-avatar" style="background:var(--gradient-4)">T</div>
+                        <div><h5>TitanForce</h5><span>Grand Master</span></div>
+                    </div>
+                    <div class="leaderboard-score"><h4>9,180</h4><span>Points</span></div>
+                    <div class="leaderboard-score"><h4>89%</h4><span>Win Rate</span></div>
+                </div>
+                <div class="glass-card leaderboard-item reveal" style="border:1px solid var(--accent-purple);background:rgba(139,92,246,0.08)">
+                    <div class="leaderboard-rank">4</div>
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-avatar" style="background:var(--gradient-1)">Z</div>
+                        <div><h5>Zaryab ⭐ (You)</h5><span>Legendary Master</span></div>
+                    </div>
+                    <div class="leaderboard-score"><h4>8,750</h4><span>Points</span></div>
+                    <div class="leaderboard-score"><h4>87%</h4><span>Win Rate</span></div>
+                </div>
+                <div class="glass-card leaderboard-item reveal">
+                    <div class="leaderboard-rank">5</div>
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-avatar" style="background:var(--gradient-2)">V</div>
+                        <div><h5>VortexGamer</h5><span>Grand Master</span></div>
+                    </div>
+                    <div class="leaderboard-score"><h4>8,210</h4><span>Points</span></div>
+                    <div class="leaderboard-score"><h4>85%</h4><span>Win Rate</span></div>
+                </div>
+                <div class="glass-card leaderboard-item reveal">
+                    <div class="leaderboard-rank">6</div>
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-avatar" style="background:var(--gradient-3)">B</div>
+                        <div><h5>BlazeMaster</h5><span>Master</span></div>
+                    </div>
+                    <div class="leaderboard-score"><h4>7,940</h4><span>Points</span></div>
+                    <div class="leaderboard-score"><h4>83%</h4><span>Win Rate</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FRIENDS / TEAM SECTION
+    ============================================ -->
+    <section id="friends">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Squad</span>
+                <h2 class="section-title">Friends &amp; Team</h2>
+                <p class="section-subtitle">My loyal gaming squad and teammates I battle alongside.</p>
+            </div>
+            <div class="friends-grid">
+                <div class="glass-card friend-card reveal">
+                    <div class="friend-avatar" style="background:var(--gradient-1)">A
+                        <span class="friend-status status-online"></span>
+                    </div>
+                    <h4>AceHunter</h4>
+                    <p class="friend-role">Team Captain</p>
+                    <div class="friend-stats">
+                        <div><h5>1.2k</h5><span>Wins</span></div>
+                        <div><h5>82%</h5><span>Rate</span></div>
+                    </div>
+                </div>
+                <div class="glass-card friend-card reveal">
+                    <div class="friend-avatar" style="background:var(--gradient-2)">M
+                        <span class="friend-status status-playing"></span>
+                    </div>
+                    <h4>MysticMage</h4>
+                    <p class="friend-role">Strategist</p>
+                    <div class="friend-stats">
+                        <div><h5>980</h5><span>Wins</span></div>
+                        <div><h5>79%</h5><span>Rate</span></div>
+                    </div>
+                </div>
+                <div class="glass-card friend-card reveal">
+                    <div class="friend-avatar" style="background:var(--gradient-3)">R
+                        <span class="friend-status status-online"></span>
+                    </div>
+                    <h4>RapidRogue</h4>
+                    <p class="friend-role">Speed Player</p>
+                    <div class="friend-stats">
+                        <div><h5>1.5k</h5><span>Wins</span></div>
+                        <div><h5>85%</h5><span>Rate</span></div>
+                    </div>
+                </div>
+                <div class="glass-card friend-card reveal">
+                    <div class="friend-avatar" style="background:var(--gradient-4)">S
+                        <span class="friend-status status-offline"></span>
+                    </div>
+                    <h4>SilentStorm</h4>
+                    <p class="friend-role">Veteran</p>
+                    <div class="friend-stats">
+                        <div><h5>2.1k</h5><span>Wins</span></div>
+                        <div><h5>88%</h5><span>Rate</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         GALLERY SECTION
+    ============================================ -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Highlights</span>
+                <h2 class="section-title">Gaming Gallery</h2>
+                <p class="section-subtitle">Epic moments, victories, and screenshots from my games.</p>
+            </div>
+            <div class="gallery-grid reveal">
+                <div class="gallery-item wide">🏆
+                    <div class="gallery-overlay"><h5>Championship Victory 2024</h5></div>
+                </div>
+                <div class="gallery-item">🎲
+                    <div class="gallery-overlay"><h5>Perfect Roll</h5></div>
+                </div>
+                <div class="gallery-item tall">🔥
+                    <div class="gallery-overlay"><h5>45 Win Streak</h5></div>
+                </div>
+                <div class="gallery-item">⭐
+                    <div class="gallery-overlay"><h5>Level 99 Reached</h5></div>
+                </div>
+                <div class="gallery-item">👑
+                    <div class="gallery-overlay"><h5>Crown Achievement</h5></div>
+                </div>
+                <div class="gallery-item wide">🎮
+                    <div class="gallery-overlay"><h5>Epic Tournament Final</h5></div>
+                </div>
+                <div class="gallery-item">💎
+                    <div class="gallery-overlay"><h5>Diamond Tier</h5></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         TIMELINE / JOURNEY SECTION
+    ============================================ -->
+    <section id="timeline">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">My Story</span>
+                <h2 class="section-title">Gaming Journey</h2>
+                <p class="section-subtitle">The path from beginner to Legendary Master, milestone by milestone.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2019</span>
+                        <h4>The Beginning 🌱</h4>
+                        <p>Downloaded Yalla Ludo and played my very first game. Fell in love with the strategic dice gameplay instantly.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2020</span>
+                        <h4>Rising Star ⭐</h4>
+                        <p>Reached Gold League for the first time and started competing in weekly tournaments seriously.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2021</span>
+                        <h4>First Big Win 🏆</h4>
+                        <p>Won my first major tournament and built my core gaming squad with friends from Lahore.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2022</span>
+                        <h4>Grand Master 👑</h4>
+                        <p>Climbed into the Grand Master rank and hit a record 45-game win streak.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2023</span>
+                        <h4>MVP Season 🎖️</h4>
+                        <p>Earned the MVP award and crossed 2,000 total career victories across all game modes.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024</span>
+                        <h4>Legendary Master 💎</h4>
+                        <p>Achieved Legendary Master rank, broke into global top 150, and became a community leader.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FAQ SECTION
+    ============================================ -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Questions</span>
+                <h2 class="section-title">Frequently Asked</h2>
+                <p class="section-subtitle">Common questions about my gaming profile and how to connect.</p>
+            </div>
+            <div class="faq-container">
+                <div class="glass-card faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        How can I add you as a friend in Yalla Ludo?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can add me using my Yalla ID: 20767368567. Simply open the friends tab, search for the ID, and send a friend request. I accept requests from all genuine players!</p>
+                    </div>
+                </div>
+                <div class="glass-card faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Do you host private tournaments?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! I regularly host private tournaments for my friends and community members. Join my Discord or follow my socials to get notified about upcoming events and prize pools.</p>
+                    </div>
+                </div>
+                <div class="glass-card faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Can you teach me how to improve my game?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! I love helping new players. I share tips and strategies through my content channels and occasionally do live coaching sessions. The key is patience, positioning, and reading your opponents.</p>
+                    </div>
+                </div>
+                <div class="glass-card faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        What is your favorite game mode?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ludo Classic is my all-time favorite because it perfectly balances luck and strategy. However, I also enjoy Domino Pro for its fast-paced, skill-driven gameplay.</p>
+                    </div>
+                </div>
+                <div class="glass-card faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        How often do you stream or post content?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>I try to post highlights and gameplay regularly across my social platforms. Follow me to never miss epic comebacks, tournament finals, and lucky dice moments!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CONTACT SECTION
+    ============================================ -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Contact Me</h2>
+                <p class="section-subtitle">Want to team up, challenge me, or just say hi? Reach out!</p>
+            </div>
+            <div class="contact-container">
+                <div class="glass-card contact-info reveal-left">
+                    <h3>Let's Connect! 🤝</h3>
+                    <p>Whether you want to join my squad, challenge me to a match, or collaborate on a tournament, I'd love to hear from you.</p>
+                    <div class="contact-method">
+                        <span class="c-icon">🎮</span>
+                        <div>
+                            <h5>Yalla Ludo ID</h5>
+                            <p>20767368567</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <span class="c-icon">📍</span>
+                        <div>
+                            <h5>Location</h5>
+                            <p>Lahore, Pakistan</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <span class="c-icon">📧</span>
+                        <div>
+                            <h5>Email</h5>
+                            <p>zaryab.gaming@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <span class="c-icon">🎧</span>
+                        <div>
+                            <h5>Discord</h5>
+                            <p>Zaryab#0001</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card contact-form reveal-right">
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="Enter your gaming name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="What's this about?" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Type your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message 🚀</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+    ============================================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <span class="nav-logo-icon">🎲</span>
+                        ZARYAB
+                    </div>
+                    <p>Pro Yalla Ludo champion from Lahore. Rolling dice, winning matches, and building a gaming community one game at a time.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#profile">Profile</a></li>
+                        <li><a href="#stats">Statistics</a></li>
+                        <li><a href="#achievements">Achievements</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#leaderboard">Leaderboard</a></li>
+                        <li><a href="#friends">My Team</a></li>
+                        <li><a href="#timeline">Journey</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Zaryab Gaming Profile. All rights reserved. Made with <span class="heart">❤️</span> for the gaming community. Yalla ID: 20767368567</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll To Top Button -->
+    <button id="scrollTop" onclick="scrollToTop()">↑</button>
+
+    <!-- ============================================
+         JAVASCRIPT
+    ============================================ -->
+    <script>
+        /* ============================================
+           LOADING SCREEN HANDLER
+           Hides the loader once the page is fully loaded
+        ============================================ */
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('loader');
+            // Add a slight delay so the animation completes nicely
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                // Trigger initial reveal & counter check after loader hides
+                revealOnScroll();
+            }, 2200);
+        });
+
+        /* ============================================
+           PARTICLES BACKGROUND
+           Pure JavaScript canvas particle system
+        ============================================ */
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 120 };
+
+        // Resize canvas to fill the window
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        // Track mouse position for interactivity
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Particle class definition
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.speedY = (Math.random() - 0.5) * 0.6;
+                // Choose colors from our theme palette
+                const colors = ['#8b5cf6', '#ec4899', '#3b82f6', '#06b6d4'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            // Update particle position
+            update() {
+                // Bounce off the edges
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse repulsion effect
+                if (mouse.x !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= (dx / distance) * force * 2;
+                        this.y -= (dy / distance) * force * 2;
+                    }
+                }
+            }
+            // Draw the particle
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // Initialize the particle array based on screen size
+        function initParticles() {
+            particles = [];
+            // Fewer particles on smaller screens for performance
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 120);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        // Draw connecting lines between nearby particles
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(139, 92, 246, ' + (1 - distance / 120) * 0.3 + ')';
+                        ctx.lineWidth = 0.6;
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Main animation loop
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* ============================================
+           NAVIGATION HANDLERS
+        ============================================ */
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.getElementById('navLinks');
+        const menuToggle = document.getElementById('menuToggle');
+
+        // Add shadow & shrink navbar on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            // Show/hide scroll-to-top button
+            const scrollTopBtn = document.getElementById('scrollTop');
+            if (window.scrollY > 400) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+            // Trigger reveal animations
+            revealOnScroll();
+        });
+
+        // Toggle the mobile menu open/closed
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+        // Close the mobile menu (called when a link is clicked)
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+        // Smooth scroll to the top of the page
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ============================================
+           ANIMATED COUNTERS
+           Counts up numbers when they scroll into view
+        ============================================ */
+        let countersAnimated = new Set();
+
+        function animateCounter(el) {
+            const target = parseInt(el.getAttribute('data-count'));
+            const duration = 2000; // total animation time in ms
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease-out function for smooth deceleration
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target).toLocaleString();
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        /* ============================================
+           SCROLL REVEAL ANIMATIONS
+           Reveals elements as they enter the viewport
+        ============================================ */
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                // Reveal when element is 100px into the viewport
+                if (top < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+
+            // Animate counters when stat numbers come into view
+            document.querySelectorAll('[data-count]').forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < windowHeight - 50 && !countersAnimated.has(el)) {
+                    countersAnimated.add(el);
+                    animateCounter(el);
+                }
+            });
+
+            // Animate progress bars
+            document.querySelectorAll('.progress-fill').forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < windowHeight - 50) {
+                    const width = el.getAttribute('data-width');
+                    el.style.width = width + '%';
+                }
+            });
+        }
+
+        // Run reveal once on initial load
+        revealOnScroll();
+
+        /* ============================================
+           FAQ ACCORDION
+           Expands/collapses FAQ answers on click
+        ============================================ */
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+
+            // Close all other FAQ items for a clean accordion effect
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+            });
+
+            // Toggle the clicked item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        /* ============================================
+           CONTACT FORM HANDLER
+           Demo only - no backend, shows confirmation
+        ============================================ */
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent actual form submission
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerHTML;
+
+            // Simulate a sending state
+            btn.innerHTML = 'Sending... ⏳';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                btn.innerHTML = 'Message Sent! ✅';
+                btn.style.background = 'var(--gradient-4)';
+
+                // Reset the form and button after a short delay
+                setTimeout(() => {
+                    event.target.reset();
+                    btn.innerHTML = originalText;
+                    btn.style.opacity = '1';
+                    btn.style.background = 'var(--gradient-1)';
+                }, 2500);
+            }, 1500);
+        }
+
+        /* ============================================
+           SMOOTH SCROLL FOR ANCHOR LINKS
+           Enhances native smooth scrolling
+        ============================================ */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        /* ============================================
+           ACTIVE NAV LINK HIGHLIGHTING
+           Highlights current section in nav (optional enhancement)
+        ============================================ */
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+        });
+
+        /* ============================================
+           PARALLAX EFFECT ON HERO (subtle)
+        ============================================ */
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroVisual = document.querySelector('.hero-visual');
+            if (heroVisual && scrolled < window.innerHeight) {
+                heroVisual.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Log a friendly message to the console
+        console.log('%c🎮 Welcome to Zaryab\'s Gaming Profile! 🎲', 'color: #8b5cf6; font-size: 20px; font-weight: bold;');
+        console.log('%cYalla ID: 20767368567 | Lahore, Pakistan', 'color: #ec4899; font-size: 14px;');
+    </script>
+</body>
+</html>
